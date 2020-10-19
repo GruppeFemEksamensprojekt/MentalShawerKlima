@@ -12,15 +12,16 @@ namespace MentalShowerConsumer
 {
     public class Worker
     {
-        string URI = "https://localhost:5001/api/IndoorClimate";
-        public void Start()
+        string URI = "https://localhost:44367/api/IndoorClimate";
+        public async void Start()
         {
             Console.WriteLine(string.Join("\n", GetAllDataAsync().Result));
+            int id;
             while (true)
             {
-            Console.WriteLine("Vælg ID:");
-            var id = Console.ReadLine();
-            GetDataById(Convert.ToInt32(id));
+                Console.WriteLine("Vælg ID:");
+                id = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(await GetDataById(id));
 
             }
         }
