@@ -1,5 +1,4 @@
-﻿using ApiMentalShowerIndoor.Controllers;
-using ModelLib.Models;
+﻿using ModelLib.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
