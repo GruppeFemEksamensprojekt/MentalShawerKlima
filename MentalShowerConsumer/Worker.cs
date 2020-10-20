@@ -16,13 +16,19 @@ namespace MentalShowerConsumer
         public async void Start()
         {
             Console.WriteLine(string.Join("\n", GetAllDataAsync().Result));
-            int id;
             while (true)
             {
-                Console.WriteLine("Vælg ID:");
-                id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine(await GetDataById(id));
-
+                Console.WriteLine("Indtast lokale du vil hente målinger fra");
+                string roomId = Console.ReadLine();
+                var roomDataList = GetRoomDataAsync(roomId).Result;
+                if (roomDataList.Count != 0)
+                {
+                    Console.WriteLine(string.Join("\n", roomDataList));
+                }
+                else
+                {
+                    Console.WriteLine("Dette rum eksisterer ikke");
+                }
             }
         }
 
@@ -36,20 +42,25 @@ namespace MentalShowerConsumer
             }
         }
 
-        public async Task<SensorDataModel> GetDataById(int id)
+        //public async Task<SensorDataModel> GetDataById(int id)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        string content = await client.GetStringAsync($"{URI}/{id}");
+        //        SensorDataModel data = JsonConvert.DeserializeObject<SensorDataModel>(content);
+        //        return data;
+        //    }
+        //}
+
+        public async Task<IList<SensorDataModel>> GetRoomDataAsync(string roomId)
         {
             using (HttpClient client = new HttpClient())
             {
-                string content = await client.GetStringAsync($"{URI}/{id}");
-                SensorDataModel data = JsonConvert.DeserializeObject<SensorDataModel>(content);
+                string content = await client.GetStringAsync($"{URI}/RoomID/{roomId}");
+                IList<SensorDataModel> data = JsonConvert.DeserializeObject<IList<SensorDataModel>>(content);
                 return data;
             }
         }
-
-
-
-
-
 
 
     }

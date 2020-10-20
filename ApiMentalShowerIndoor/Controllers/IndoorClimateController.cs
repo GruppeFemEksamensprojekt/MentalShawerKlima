@@ -16,9 +16,13 @@ namespace ApiMentalShowerIndoor.Controllers
         public static List<SensorDataModel> data = new List<SensorDataModel>()
             {
                 new SensorDataModel(1, "d-5", 25.5F, 35, 35, 35),
+                new SensorDataModel(1, "d-5", 26.0F, 36, 36, 36),
                 new SensorDataModel(2, "d-6", 20.2F, 40, 40, 40),
+                new SensorDataModel(2, "d-6", 20.5F, 41, 41, 41),
                 new SensorDataModel(3, "d-7", 15.4F, 45, 45, 45),
+                new SensorDataModel(3, "d-7", 15.6F, 46, 46, 46),
                 new SensorDataModel(4, "d-8", 12.7F, 50, 50, 50),
+                new SensorDataModel(4, "d-8", 12.9F, 51, 51, 51),
                 new SensorDataModel(5, "d-9", 29.9F, 55, 55, 55)
             };
         // GET: api/<IndoorClimateController>
@@ -33,6 +37,13 @@ namespace ApiMentalShowerIndoor.Controllers
         public SensorDataModel Get(int id)
         {
             return data.Find(i => i.SensorID == id);
+        }
+        // GET api/<IndoorClimateController>/RoomID/d-5
+        [HttpGet]
+        [Route("RoomID/{roomId}")]
+        public IEnumerable<SensorDataModel> Get(string roomId)
+        {
+            return data.FindAll(i => i.RoomID == roomId);
         }
 
         // POST api/<IndoorClimateController>
@@ -65,5 +76,6 @@ namespace ApiMentalShowerIndoor.Controllers
         {
             data.Remove(Get(id));
         }
+        
     }
 }
